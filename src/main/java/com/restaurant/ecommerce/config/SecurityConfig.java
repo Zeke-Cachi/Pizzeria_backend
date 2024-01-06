@@ -15,7 +15,7 @@ public class SecurityConfig {
   SecurityFilterChain securityFilterChain(HttpSecurity httpSec) throws Exception{
     return httpSec
             .authorizeHttpRequests(auth -> {
-              auth.requestMatchers("/api/v1/").permitAll();
+              auth.requestMatchers("/api/v1/pizzas").permitAll();
               auth.anyRequest().authenticated();
             })
             .oauth2Login(withDefaults())

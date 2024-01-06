@@ -22,7 +22,6 @@ public class Pizza {
   @NotNull
   private String pizzaDescription;
 
-<<<<<<< HEAD
   @Column(name="pizza_image")
   @NotBlank
   @NotNull
@@ -33,13 +32,10 @@ public class Pizza {
   @NotNull
   private String pizzaTopping;
 
-=======
+
   @Enumerated(EnumType.ORDINAL)
->>>>>>> ccaa082 (added:securityConfig, repository, service and controller)
   @Column(name="pizza_bake_type")
   @NotBlank
   @NotNull
   private PizzaBakeType pizzaBakeType;
-
-
 }

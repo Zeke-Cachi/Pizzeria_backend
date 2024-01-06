@@ -9,7 +9,7 @@ import lombok.Setter;
 
 @Entity
 @Builder
-@Table(name = "order")
+@Table(name = "orders")
 @Getter
 @Setter
 public class Order {
@@ -18,13 +18,11 @@ public class Order {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long orderId;
 
-  @Column
-  @NotNull
-  @NotBlank
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "pizza_id", referencedColumnName = "pizzaId")
   private Pizza pizza;
 
-  @Column(name = "user_id")
   @ManyToOne
-  @JoinColumn(name = "user_id", referencedColumnName = "id")
+  @JoinColumn(name = "user_id", referencedColumnName = "userId")
   private User user;
 }
