@@ -1,8 +1,10 @@
 package com.restaurant.ecommerce.models;
 
 
+import com.restaurant.ecommerce.enums.UserRole;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
@@ -31,6 +33,16 @@ public class User {
   @NotNull(message="Field 'email' cannot be null")
   @Email
   private String email;
+
+  @Column(name = "password")
+  private String password;
+
+
+  @Enumerated(EnumType.ORDINAL)
+  @Column(name = "role")
+  @NotNull
+  @NotBlank
+  private UserRole userRole;
 
   @Column(name = "phone_number")
   private int phoneNumber;
