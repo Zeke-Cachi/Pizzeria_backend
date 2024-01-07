@@ -12,7 +12,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @EnableWebSecurity
 public class SecurityConfig {
   @Bean
-  SecurityFilterChain securityFilterChain(HttpSecurity httpSec) throws Exception{
+  SecurityFilterChain securityFilterChain(HttpSecurity httpSec) throws Exception {
     return httpSec
             .authorizeHttpRequests(auth -> {
               auth.requestMatchers("/api/v1/pizzas").permitAll();

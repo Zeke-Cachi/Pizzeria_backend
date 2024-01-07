@@ -4,9 +4,13 @@ import com.restaurant.ecommerce.enums.PizzaBakeType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "pizzas")
+@Setter
+@Getter
 public class Pizza {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,17 +25,6 @@ public class Pizza {
   @NotBlank
   @NotNull
   private String pizzaDescription;
-
-  @Column(name="pizza_image")
-  @NotBlank
-  @NotNull
-  private String pizzaImg;
-
-  @Column(name="pizza_topping")
-  @NotBlank
-  @NotNull
-  private String pizzaTopping;
-
 
   @Enumerated(EnumType.ORDINAL)
   @Column(name="pizza_bake_type")
