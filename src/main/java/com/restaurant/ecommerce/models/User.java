@@ -37,7 +37,6 @@ public class User {
   @Column(name = "password")
   private String password;
 
-
   @Enumerated(EnumType.ORDINAL)
   @Column(name = "role")
   @NotNull
