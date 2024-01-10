@@ -19,7 +19,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
 
@@ -27,7 +26,6 @@ public class UserServiceTest {
   private UserService userServiceTest;
   @Mock
   private UserRepository userRepositoryTest;
-
   @InjectMocks
   private UserController userController;
 
@@ -42,5 +40,18 @@ public class UserServiceTest {
 
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
     assertThat(response.getBody()).isEqualTo(expectedUser);
+  }
+
+  @Test
+  void testIfUserIsNotCreated() {
+    RegistrationDTO registrationDTO = new RegistrationDTO();
+    User expectedUser = registrationDTO.toUserEntity();
+    when(userServiceTest.createUser(any(RegistrationDTO.class)))
+            .thenReturn(Optional.empty());
+
+    ResponseEntity<User> response = userController.createUser(registrationDTO);
+
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+    assertThat(response.getBody()).isNull();
   }
 }
