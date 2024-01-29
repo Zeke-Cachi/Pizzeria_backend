@@ -30,6 +30,7 @@ public class SecurityConfig {
               auth.requestMatchers("/api/v1/pizzas")
                       .permitAll();
               auth.requestMatchers("/api/v1/users/register").permitAll();
+              auth.requestMatchers("/api/v1/users/login").permitAll();
               auth.anyRequest().authenticated();
             })
             .oauth2Login(withDefaults())

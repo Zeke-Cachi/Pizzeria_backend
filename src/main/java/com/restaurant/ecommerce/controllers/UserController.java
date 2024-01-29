@@ -1,5 +1,6 @@
 package com.restaurant.ecommerce.controllers;
 
+import com.restaurant.ecommerce.DTOs.LoginDTO;
 import com.restaurant.ecommerce.DTOs.RegistrationDTO;
 import com.restaurant.ecommerce.models.User;
 import com.restaurant.ecommerce.services.UserService;
@@ -27,6 +28,17 @@ public class UserController {
     if (newUser.isPresent()) {
       User createdUser = newUser.get();
       return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
+    } else {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+    }
+  }
+
+  @PostMapping("/login")
+  public ResponseEntity<User> loginUser(@RequestBody LoginDTO loginDTO) {
+    Optional<User> checkIfUserExists = this.userService.loginUser(loginDTO);
+    if (checkIfUserExists.isPresent()) {
+      User loggedUser = checkIfUserExists.get();
+      return ResponseEntity.status(HttpStatus.OK).body(loggedUser);
     } else {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     }

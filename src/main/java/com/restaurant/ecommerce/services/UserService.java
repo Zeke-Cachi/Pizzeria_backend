@@ -1,5 +1,6 @@
 package com.restaurant.ecommerce.services;
 
+import com.restaurant.ecommerce.DTOs.LoginDTO;
 import com.restaurant.ecommerce.DTOs.RegistrationDTO;
 import com.restaurant.ecommerce.models.User;
 import com.restaurant.ecommerce.repositories.UserRepository;
@@ -35,5 +36,15 @@ public class UserService {
       e.printStackTrace();
       return Optional.empty();
     }
+  }
+
+  public Optional<User> loginUser(LoginDTO loginDTO) {
+    Optional<User> doesUserExists = this.userRepository.findByEmail(loginDTO.getEmail());
+    if (doesUserExists.isPresent()) {
+      if (passwordEncoder.matches(loginDTO.getPassword(), doesUserExists.get().getPassword())) {
+        return doesUserExists;
+      }
+    }
+    return Optional.empty();
   }
 }
