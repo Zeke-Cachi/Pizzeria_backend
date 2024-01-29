@@ -24,7 +24,7 @@ public class RegistrationDTO {
 
   private String password;
 
-  private int phoneNumber;
+  private Long phoneNumber;
 
   @NotNull(message = "Field 'address' cannot be null")
   private String address;

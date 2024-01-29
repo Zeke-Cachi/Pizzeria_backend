@@ -40,11 +40,10 @@ public class User {
   @Enumerated(EnumType.ORDINAL)
   @Column(name = "role")
   @NotNull
-  @NotBlank
   private UserRole userRole;
 
   @Column(name = "phone_number")
-  private int phoneNumber;
+  private Long phoneNumber;
 
   @Column
   @NotNull(message="Field 'address' cannot be null")

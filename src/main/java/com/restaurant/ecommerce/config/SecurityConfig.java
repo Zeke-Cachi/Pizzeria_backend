@@ -1,11 +1,12 @@
 package com.restaurant.ecommerce.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -19,27 +20,25 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @EnableWebSecurity
 public class SecurityConfig {
 
-  @Autowired
-  private OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
+
   @Bean
   SecurityFilterChain securityFilterChain(HttpSecurity httpSec) throws Exception {
     return httpSec
             .csrf(AbstractHttpConfigurer::disable)
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .authorizeHttpRequests(auth -> {
-              auth.requestMatchers("/api/v1/users/register", "/api/v1/pizzas", "/api/v1/users/form").permitAll();
+              auth.requestMatchers("/api/v1/pizzas")
+                      .permitAll();
+              auth.requestMatchers("/api/v1/users/register").permitAll();
               auth.anyRequest().authenticated();
             })
-            .oauth2Login(oauth -> {
-              oauth.successHandler(oAuth2LoginSuccessHandler);
-            })
+            .oauth2Login(withDefaults())
             .build();
   }
-
   @Bean
   CorsConfigurationSource corsConfigurationSource() {
     CorsConfiguration configuration = new CorsConfiguration();
-    configuration.setAllowedOrigins(List.of("http://localhost:5843"));
+    configuration.setAllowedOrigins(List.of("http://localhost:8080"));
     configuration.setAllowedHeaders(List.of("*"));
     configuration.setAllowedMethods(List.of("*"));
     configuration.setAllowCredentials(true);
@@ -47,5 +46,8 @@ public class SecurityConfig {
     urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", configuration);
     return urlBasedCorsConfigurationSource;
   }
-
+  @Bean
+  public PasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
+  }
 }
