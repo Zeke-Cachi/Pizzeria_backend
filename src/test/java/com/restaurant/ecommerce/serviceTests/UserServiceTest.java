@@ -66,7 +66,6 @@ public class UserServiceTest {
     assertThat(response.getBody()).isNull();
   }
 //--------------------------------------------------------------------------------------------------
-
   @Test
   public void testIfUserLogsIn() {
     LoginDTO loginDTO = new LoginDTO("test@test.com", "password");
@@ -79,5 +78,32 @@ public class UserServiceTest {
     Optional<User> result = this.userService.loginUser(loginDTO);
 
     assertThat(result).isPresent();
+  }
+  //--------------------------------------------------------------------------------------------------
+  @Test
+  public void testIfUserEmailIsNotFound() {
+    LoginDTO loginDTO = new LoginDTO("test@test.com", "password");
+
+    User testUser = new User(1L, "testname", "testlastname", "test@test.com", "password", USER, 1111111111L, "testAdress", "testCity");
+    when(this.userRepository.findByEmail(loginDTO.getEmail()))
+            .thenReturn(Optional.empty());
+
+    Optional<User> result = this.userService.loginUser(loginDTO);
+
+    assertThat(result).isEmpty();
+  }
+  //--------------------------------------------------------------------------------------------------
+  @Test
+  public void testIfUserPasswordDoesntMatch() {
+    LoginDTO loginDTO = new LoginDTO("test@test.com", "password");
+
+    User testUser = new User(1L, "testname", "testlastname", "test@test.com", "password", USER, 1111111111L, "testAdress", "testCity");
+    when(this.userRepository.findByEmail(loginDTO.getEmail()))
+            .thenReturn(Optional.of(testUser));
+    when(this.passwordEncoder.matches(loginDTO.getPassword(), testUser.getPassword())).thenReturn(false);
+
+    Optional<User> result = this.userService.loginUser(loginDTO);
+
+    assertThat(result).isEmpty();
   }
 }
