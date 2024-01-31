@@ -4,6 +4,7 @@ import com.restaurant.ecommerce.DTOs.LoginDTO;
 import com.restaurant.ecommerce.DTOs.RegistrationDTO;
 import com.restaurant.ecommerce.models.User;
 import com.restaurant.ecommerce.repositories.UserRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class UserService {
 
   @Autowired
@@ -37,7 +39,7 @@ public class UserService {
       return Optional.empty();
     }
   }
-
+//-------------------------------------------------------------------------------------------------------
   public Optional<User> loginUser(LoginDTO loginDTO) {
     Optional<User> doesUserExists = this.userRepository.findByEmail(loginDTO.getEmail());
     if (doesUserExists.isPresent()) {

@@ -22,6 +22,7 @@ public class UserController {
     this.userService = userService;
   }
 
+//------------------------------------------------------------------------------------------------
   @PostMapping("/register")
   public ResponseEntity<User> createUser(@RequestBody RegistrationDTO registrationDTO) {
     Optional<User> newUser = this.userService.createUser(registrationDTO);
@@ -32,7 +33,7 @@ public class UserController {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     }
   }
-
+//------------------------------------------------------------------------------------------------
   @PostMapping("/login")
   public ResponseEntity<User> loginUser(@RequestBody LoginDTO loginDTO) {
     Optional<User> checkIfUserExists = this.userService.loginUser(loginDTO);
