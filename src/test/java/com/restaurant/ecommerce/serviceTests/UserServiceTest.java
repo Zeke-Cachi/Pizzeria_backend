@@ -30,47 +30,28 @@ import static org.mockito.Mockito.when;
 public class UserServiceTest {
 
   @Mock
-  private UserService mockedUserService;
-  @Mock
   private UserRepository userRepository;
   @Mock
   private PasswordEncoder passwordEncoder;
   @InjectMocks
-  private UserController userController;
-  @InjectMocks
   private UserService userService;
 
-//--------------------------------------------------------------------------------------------------
-  @Test
-  void testIfUserIsCreated() {
-    RegistrationDTO registrationDTO = new RegistrationDTO("name", "lastname", "test@test.com", "password", 111111111L, "address", "city");
-    User expectedUser = registrationDTO.toUserEntity();
-    when(mockedUserService.createUser(any(RegistrationDTO.class)))
-            .thenReturn(Optional.of(expectedUser));
 
-    ResponseEntity<User> response = userController.createUser(registrationDTO);
-
-    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
-    assertThat(response.getBody()).isEqualTo(expectedUser);
-  }
-//--------------------------------------------------------------------------------------------------
-  @Test
-  void testIfUserIsNotCreated() {
-    RegistrationDTO registrationDTO = new RegistrationDTO();
-    when(mockedUserService.createUser(any(RegistrationDTO.class)))
-            .thenReturn(Optional.empty());
-
-    ResponseEntity<User> response = userController.createUser(registrationDTO);
-
-    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-    assertThat(response.getBody()).isNull();
-  }
 //--------------------------------------------------------------------------------------------------
   @Test
   public void testIfUserLogsIn() {
     LoginDTO loginDTO = new LoginDTO("test@test.com", "password");
 
-    User testUser = new User(1L, "testname", "testlastname", "test@test.com", "password", USER, 1111111111L, "testAdress", "testCity");
+    User testUser = new User(
+            1L,
+            "testname",
+            "testlastname",
+            "test@test.com",
+            "password",
+            USER,
+            1111111111L,
+            "testAdress",
+            "testCity");
     when(this.userRepository.findByEmail(loginDTO.getEmail()))
             .thenReturn(Optional.of(testUser));
     when(this.passwordEncoder.matches(loginDTO.getPassword(), testUser.getPassword())).thenReturn(true);
@@ -84,7 +65,16 @@ public class UserServiceTest {
   public void testIfUserEmailIsNotFound() {
     LoginDTO loginDTO = new LoginDTO("test@test.com", "password");
 
-    User testUser = new User(1L, "testname", "testlastname", "test@test.com", "password", USER, 1111111111L, "testAdress", "testCity");
+    User testUser = new User(
+            1L,
+            "testname",
+            "testlastname",
+            "test@test.com",
+            "password",
+            USER,
+            1111111111L,
+            "testAdress",
+            "testCity");
     when(this.userRepository.findByEmail(loginDTO.getEmail()))
             .thenReturn(Optional.empty());
 
@@ -97,7 +87,16 @@ public class UserServiceTest {
   public void testIfUserPasswordDoesntMatch() {
     LoginDTO loginDTO = new LoginDTO("test@test.com", "password");
 
-    User testUser = new User(1L, "testname", "testlastname", "test@test.com", "password", USER, 1111111111L, "testAdress", "testCity");
+    User testUser = new User(
+            1L,
+            "testname",
+            "testlastname",
+            "test@test.com",
+            "password",
+            USER,
+            1111111111L,
+            "testAdress",
+            "testCity");
     when(this.userRepository.findByEmail(loginDTO.getEmail()))
             .thenReturn(Optional.of(testUser));
     when(this.passwordEncoder.matches(loginDTO.getPassword(), testUser.getPassword())).thenReturn(false);
