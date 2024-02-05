@@ -31,4 +31,15 @@ public class Pizza {
   @NotBlank
   @NotNull
   private PizzaBakeType pizzaBakeType;
+
+  @Column(name="pizza_img_1")
+  @NotBlank
+  @NotNull
+  private String pizzaImg1;
+
+  @Column(name="pizza_img_2")
+  private String pizzaImg2;
+
+  @Column(name="pizza_img_3")
+  private String pizzaImg3;
 }
