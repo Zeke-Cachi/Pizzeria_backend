@@ -1,5 +1,6 @@
 package com.restaurant.ecommerce.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -19,8 +20,13 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+  @Value("${SERVER_URL}")
+  private String serverURL;
 
+  @Value("${CLIENT_URL}")
+  private String clientURL;
 
+//--------------------------------------------------------------------------------------------------------------
   @Bean
   SecurityFilterChain securityFilterChain(HttpSecurity httpSec) throws Exception {
     return httpSec
@@ -36,10 +42,11 @@ public class SecurityConfig {
             .oauth2Login(withDefaults())
             .build();
   }
+//--------------------------------------------------------------------------------------------------------------
   @Bean
   CorsConfigurationSource corsConfigurationSource() {
     CorsConfiguration configuration = new CorsConfiguration();
-    configuration.setAllowedOrigins(List.of("http://localhost:8080"));
+    configuration.setAllowedOrigins(List.of(serverURL, clientURL));
     configuration.setAllowedHeaders(List.of("*"));
     configuration.setAllowedMethods(List.of("*"));
     configuration.setAllowCredentials(true);
@@ -47,6 +54,7 @@ public class SecurityConfig {
     urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", configuration);
     return urlBasedCorsConfigurationSource;
   }
+//--------------------------------------------------------------------------------------------------------------
   @Bean
   public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
