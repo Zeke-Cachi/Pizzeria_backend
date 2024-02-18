@@ -32,6 +32,16 @@ public class Pizza {
   @NotNull
   private PizzaBakeType pizzaBakeType;
 
+  @Column(name="pizza_price")
+  @NotBlank
+  @NotNull
+  private double pizzaPrice;
+
+  @Column(name="pizza_quantity")
+  @NotBlank
+  @NotNull
+  private int pizzaQuantity = 0;
+
   @Column(name="pizza_img_1")
   @NotBlank
   @NotNull
