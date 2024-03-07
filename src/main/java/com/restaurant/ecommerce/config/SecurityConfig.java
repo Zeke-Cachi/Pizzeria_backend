@@ -37,6 +37,7 @@ public class SecurityConfig {
                       .permitAll();
               auth.requestMatchers("/api/v1/users/register").permitAll();
               auth.requestMatchers("/api/v1/users/login").permitAll();
+              auth.requestMatchers("/oauth2/callback/google/").permitAll();
               auth.anyRequest().authenticated();
             })
             .oauth2Login(withDefaults())

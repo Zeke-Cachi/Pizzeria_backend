@@ -45,11 +45,14 @@ public class User {
   @Column(name = "phone_number")
   private Long phoneNumber;
 
-  @Column
+  @Column(name = "address")
   @NotNull(message="Field 'address' cannot be null")
   private String address;
 
-  @Column
+  @Column(name = "city")
   @NotNull(message="Field 'city' cannot be null")
   private String city;
+
+  @Column(name = "profile_img")
+  private String profilePic;
 }
