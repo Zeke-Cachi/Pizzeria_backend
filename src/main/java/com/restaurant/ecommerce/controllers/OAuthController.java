@@ -15,7 +15,7 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("/oauth2/callback/google/")
-public class OauthController {
+public class OAuthController {
 
   @Autowired
   private OAuthService oAuthService;

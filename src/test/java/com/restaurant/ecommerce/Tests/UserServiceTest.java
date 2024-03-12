@@ -1,8 +1,6 @@
-package com.restaurant.ecommerce.serviceTests;
+package com.restaurant.ecommerce.Tests;
 
 import com.restaurant.ecommerce.DTOs.LoginDTO;
-import com.restaurant.ecommerce.DTOs.RegistrationDTO;
-import com.restaurant.ecommerce.controllers.UserController;
 import com.restaurant.ecommerce.models.User;
 import com.restaurant.ecommerce.repositories.UserRepository;
 import com.restaurant.ecommerce.services.UserService;
@@ -11,9 +9,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
@@ -22,7 +17,6 @@ import static com.restaurant.ecommerce.enums.UserRole.USER;
 import static net.bytebuddy.matcher.ElementMatchers.is;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -51,7 +45,8 @@ public class UserServiceTest {
             USER,
             1111111111L,
             "testAdress",
-            "testCity");
+            "testCity",
+            "www.profilepicurl.com");
     when(this.userRepository.findByEmail(loginDTO.getEmail()))
             .thenReturn(Optional.of(testUser));
     when(this.passwordEncoder.matches(loginDTO.getPassword(), testUser.getPassword())).thenReturn(true);
@@ -74,7 +69,8 @@ public class UserServiceTest {
             USER,
             1111111111L,
             "testAdress",
-            "testCity");
+            "testCity",
+            "www.profilepicurl.com");
     when(this.userRepository.findByEmail(loginDTO.getEmail()))
             .thenReturn(Optional.empty());
 
@@ -96,7 +92,8 @@ public class UserServiceTest {
             USER,
             1111111111L,
             "testAdress",
-            "testCity");
+            "testCity",
+            "www.profilepicurl.com");
     when(this.userRepository.findByEmail(loginDTO.getEmail()))
             .thenReturn(Optional.of(testUser));
     when(this.passwordEncoder.matches(loginDTO.getPassword(), testUser.getPassword())).thenReturn(false);

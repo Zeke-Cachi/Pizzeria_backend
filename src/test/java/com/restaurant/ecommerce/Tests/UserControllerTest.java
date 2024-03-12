@@ -1,4 +1,4 @@
-package com.restaurant.ecommerce.serviceTests;
+package com.restaurant.ecommerce.Tests;
 
 import com.restaurant.ecommerce.DTOs.RegistrationDTO;
 import com.restaurant.ecommerce.controllers.UserController;
