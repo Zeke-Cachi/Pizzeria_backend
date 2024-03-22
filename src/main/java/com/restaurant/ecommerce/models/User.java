@@ -46,11 +46,9 @@ public class User {
   private Long phoneNumber;
 
   @Column(name = "address")
-  @NotNull(message="Field 'address' cannot be null")
   private String address;
 
   @Column(name = "city")
-  @NotNull(message="Field 'city' cannot be null")
   private String city;
 
   @Column(name = "profile_img")

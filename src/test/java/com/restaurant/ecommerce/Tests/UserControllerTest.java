@@ -1,6 +1,7 @@
 package com.restaurant.ecommerce.Tests;
 
 import com.restaurant.ecommerce.DTOs.RegistrationDTO;
+import com.restaurant.ecommerce.DTOs.UserDataDTO;
 import com.restaurant.ecommerce.controllers.UserController;
 import com.restaurant.ecommerce.models.User;
 import com.restaurant.ecommerce.services.UserService;
@@ -37,13 +38,20 @@ public class UserControllerTest {
             "address",
             "city");
     User expectedUser = registrationDTO.toUserEntity();
+    UserDataDTO userData = new UserDataDTO(
+            expectedUser.getName(),
+            expectedUser.getLastname(),
+            expectedUser.getEmail(),
+            expectedUser.getProfilePic());
     when(mockedUserService.createUser(any(RegistrationDTO.class)))
             .thenReturn(Optional.of(expectedUser));
 
-    ResponseEntity<User> response = userController.createUser(registrationDTO);
+    ResponseEntity<UserDataDTO> response = userController.createUser(registrationDTO);
+    System.out.println(response.getBody());
+    System.out.println(userData);
 
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
-    assertThat(response.getBody()).isEqualTo(expectedUser);
+    assertThat(response.getBody()).usingRecursiveComparison().isEqualTo(userData);
   }
   //--------------------------------------------------------------------------------------------------
   @Test
@@ -52,7 +60,7 @@ public class UserControllerTest {
     when(mockedUserService.createUser(any(RegistrationDTO.class)))
             .thenReturn(Optional.empty());
 
-    ResponseEntity<User> response = userController.createUser(registrationDTO);
+    ResponseEntity<UserDataDTO> response = userController.createUser(registrationDTO);
 
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
     assertThat(response.getBody()).isNull();

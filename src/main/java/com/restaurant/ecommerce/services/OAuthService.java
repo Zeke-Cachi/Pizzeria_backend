@@ -1,6 +1,6 @@
 package com.restaurant.ecommerce.services;
 
-import com.restaurant.ecommerce.DTOs.GoogleUserDataDTO;
+import com.restaurant.ecommerce.DTOs.UserDataDTO;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.json.JSONObject;
@@ -66,7 +66,7 @@ public class OAuthService {
   }
 //----------------------------------------------------------------------------------------------------------------------
 
-  public GoogleUserDataDTO getUserDataFromGoogle(String accessToken) {
+  public UserDataDTO getUserDataFromGoogle(String accessToken) {
     String userDataUrl = googleEndpoint;
     HttpHeaders headers = new HttpHeaders();
     headers.setBearerAuth(accessToken);
@@ -74,7 +74,7 @@ public class OAuthService {
     ResponseEntity<String> response = restTemplate.exchange(userDataUrl, HttpMethod.GET, entity, String.class);
     if (response.getStatusCode() == HttpStatus.OK) {
       JSONObject userData = new JSONObject(response.getBody());
-      GoogleUserDataDTO gData = new GoogleUserDataDTO();
+      UserDataDTO gData = new UserDataDTO();
       gData.setGivenName(userData.getString("given_name"));
       gData.setFamilyName(userData.getString("family_name"));
       gData.setEmail(userData.getString("email"));
@@ -85,7 +85,7 @@ public class OAuthService {
     }
   }
 //----------------------------------------------------------------------------------------------------------------------
-  public String createJWT(GoogleUserDataDTO userData) {
+  public String createJWT(UserDataDTO userData) {
     String jwt = Jwts.builder()
             .claim("name", userData.getGivenName())
             .claim("lastname", userData.getFamilyName())

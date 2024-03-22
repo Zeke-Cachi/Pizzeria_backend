@@ -2,6 +2,7 @@ package com.restaurant.ecommerce.controllers;
 
 import com.restaurant.ecommerce.DTOs.LoginDTO;
 import com.restaurant.ecommerce.DTOs.RegistrationDTO;
+import com.restaurant.ecommerce.DTOs.UserDataDTO;
 import com.restaurant.ecommerce.models.User;
 import com.restaurant.ecommerce.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,16 +25,17 @@ public class UserController {
   }
 
 //------------------------------------------------------------------------------------------------
-  @GetMapping("/oauth2/callback/google")
-
-
-//------------------------------------------------------------------------------------------------
   @PostMapping("/register")
-  public ResponseEntity<User> createUser(@RequestBody RegistrationDTO registrationDTO) {
+  public ResponseEntity<UserDataDTO> createUser(@RequestBody RegistrationDTO registrationDTO) {
     Optional<User> newUser = this.userService.createUser(registrationDTO);
     if (newUser.isPresent()) {
       User createdUser = newUser.get();
-      return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
+      UserDataDTO responseUser = new UserDataDTO(
+              createdUser.getName(),
+              createdUser.getLastname(),
+              createdUser.getEmail(),
+              createdUser.getProfilePic());
+      return ResponseEntity.status(HttpStatus.CREATED).body(responseUser);
     } else {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     }

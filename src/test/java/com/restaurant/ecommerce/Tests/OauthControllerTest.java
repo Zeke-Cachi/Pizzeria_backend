@@ -1,6 +1,6 @@
 package com.restaurant.ecommerce.Tests;
 
-import com.restaurant.ecommerce.DTOs.GoogleUserDataDTO;
+import com.restaurant.ecommerce.DTOs.UserDataDTO;
 import com.restaurant.ecommerce.controllers.OAuthController;
 import com.restaurant.ecommerce.services.OAuthService;
 import jakarta.servlet.http.HttpServletResponse;
@@ -46,7 +46,7 @@ public class OauthControllerTest {
     String authToken = testAccessToken;
     String jwtTest = testJWTString;
     HttpServletResponse response = mock(HttpServletResponse.class);
-    GoogleUserDataDTO testUser = new GoogleUserDataDTO("testname", "testLastname", "test@test.com", "www.profilepicurl.com");
+    UserDataDTO testUser = new UserDataDTO("testname", "testLastname", "test@test.com", "www.profilepicurl.com");
 
     //When
     when(oAuthService.getAccessToken(code))
@@ -58,7 +58,7 @@ public class OauthControllerTest {
 
 
     String accessTokenTest = oAuthService.getAccessToken(code);
-    GoogleUserDataDTO testResponse = oAuthService.getUserDataFromGoogle(accessTokenTest);
+    UserDataDTO testResponse = oAuthService.getUserDataFromGoogle(accessTokenTest);
     String testJwt = oAuthService.createJWT(testResponse);
 
 

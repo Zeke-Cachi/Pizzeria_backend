@@ -27,6 +27,8 @@ public class UserService {
   public UserService (UserRepository userRepository) {
     this.userRepository = userRepository;
   }
+
+  //-------------------------------------------------------------------------------------------------------
   public Optional<User> createUser(RegistrationDTO registrationDTO) {
     try {
       User user = registrationDTO.toUserEntity();

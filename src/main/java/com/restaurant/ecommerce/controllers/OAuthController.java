@@ -1,6 +1,6 @@
 package com.restaurant.ecommerce.controllers;
 
-import com.restaurant.ecommerce.DTOs.GoogleUserDataDTO;
+import com.restaurant.ecommerce.DTOs.UserDataDTO;
 import com.restaurant.ecommerce.services.OAuthService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class OAuthController {
   public void getUserData(@RequestParam("code") String code, HttpServletResponse response) throws IOException {
     String accessToken = oAuthService.getAccessToken(code);
     if (!accessToken.equals("Couldn't find access token")) {
-      GoogleUserDataDTO userData = oAuthService.getUserDataFromGoogle(accessToken);
+      UserDataDTO userData = oAuthService.getUserDataFromGoogle(accessToken);
       String jwt = oAuthService.createJWT(userData);
       response.sendRedirect("http://localhost:5173?token=" + jwt);
     }

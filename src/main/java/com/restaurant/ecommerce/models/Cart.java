@@ -15,11 +15,11 @@ public class Cart {
   private Long id;
 
   @ManyToOne
-  @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+  @JoinColumn(name = "user_id", referencedColumnName = "userId")
   private User user;
 
   @ManyToOne
-  @JoinColumn(name = "pizza_id", referencedColumnName = "pizza_id")
+  @JoinColumn(name = "pizza_id", referencedColumnName = "pizzaId")
   private Pizza pizza;
 
   @Column

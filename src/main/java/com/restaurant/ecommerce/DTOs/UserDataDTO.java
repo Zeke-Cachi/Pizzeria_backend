@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class GoogleUserDataDTO {
+public class UserDataDTO {
   @NotNull
   @NotBlank
   private String givenName;

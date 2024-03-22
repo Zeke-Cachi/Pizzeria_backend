@@ -30,10 +30,8 @@ public class RegistrationDTO {
 
   private Long phoneNumber;
 
-  @NotNull(message = "Field 'address' cannot be null")
   private String address;
 
-  @NotNull(message = "Field 'city' cannot be null")
   private String city;
 
   public User toUserEntity() {
