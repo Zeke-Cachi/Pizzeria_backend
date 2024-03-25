@@ -26,29 +26,22 @@ public class UserController {
 
 //------------------------------------------------------------------------------------------------
   @PostMapping("/register")
-  public ResponseEntity<UserDataDTO> createUser(@RequestBody RegistrationDTO registrationDTO) {
-    Optional<User> newUser = this.userService.createUser(registrationDTO);
-    if (newUser.isPresent()) {
-      User createdUser = newUser.get();
-      UserDataDTO responseUser = new UserDataDTO(
-              createdUser.getName(),
-              createdUser.getLastname(),
-              createdUser.getEmail(),
-              createdUser.getProfilePic());
-      return ResponseEntity.status(HttpStatus.CREATED).body(responseUser);
+  public ResponseEntity<String> createUser(@RequestBody RegistrationDTO registrationDTO) {
+    String jwt = this.userService.createUser(registrationDTO);
+    if (!jwt.equals("couldn't save new user")) {
+      return ResponseEntity.status(HttpStatus.CREATED).body(jwt);
     } else {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     }
   }
 //------------------------------------------------------------------------------------------------
   @PostMapping("/login")
-  public ResponseEntity<User> loginUser(@RequestBody LoginDTO loginDTO) {
-    Optional<User> checkIfUserExists = this.userService.loginUser(loginDTO);
-    if (checkIfUserExists.isPresent()) {
-      User loggedUser = checkIfUserExists.get();
-      return ResponseEntity.status(HttpStatus.OK).body(loggedUser);
+  public ResponseEntity<String> loginUser(@RequestBody LoginDTO loginDTO) {
+    String jwt = this.userService.loginUser(loginDTO);
+    if (!jwt.equals("No user found")) {
+      return ResponseEntity.status(HttpStatus.OK).body(jwt);
     } else {
-      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(jwt);
     }
   }
 }

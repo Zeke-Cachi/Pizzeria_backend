@@ -87,8 +87,8 @@ public class OAuthService {
 //----------------------------------------------------------------------------------------------------------------------
   public String createJWT(UserDataDTO userData) {
     String jwt = Jwts.builder()
-            .claim("name", userData.getGivenName())
-            .claim("lastname", userData.getFamilyName())
+            .claim("givenName", userData.getGivenName())
+            .claim("familyName", userData.getFamilyName())
             .claim("email", userData.getEmail())
             .claim("profileImage", userData.getProfilePic())
             .signWith(SignatureAlgorithm.HS256, JwtSecret)

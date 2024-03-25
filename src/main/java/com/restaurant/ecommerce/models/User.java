@@ -7,6 +7,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.springframework.beans.factory.annotation.Value;
 
 @Entity
 @Builder
@@ -16,6 +17,9 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
+
+  private static String defaultUserIcon;
+
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,5 +56,5 @@ public class User {
   private String city;
 
   @Column(name = "profile_img")
-  private String profilePic;
+  private String profilePic = "https://raw.githubusercontent.com/Zeke-Cachi/pizzeria_frontend/cart-store-request/src/assets/default-user-icon.svg";
 }
